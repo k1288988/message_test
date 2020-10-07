@@ -1,6 +1,3 @@
-<?php
-date_default_timezone_set("Asia/Taipei");
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,14 +24,12 @@ date_default_timezone_set("Asia/Taipei");
   <div class="form-group row">
   <label for="message" class="col-4 col-form-label">留言</label>
     <div class="col-8">
-      <textarea id="message" name="u_mesg" cols="40" rows="5" class="form-control"></textarea>
+      <textarea id="message" name="u_msg" cols="40" rows="5" class="form-control"></textarea>
     </div>
   </div> 
   <div class="form-group row">
     <div class="offset-4 col-8">
-      <input type="hidden" name="u_id" value="<?= time()?>">
-      <input type="hidden" name="u_time" value="<?= date("Y-m-d H:i:s",time())?>">
-      <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+      <button name="submit" type="submit" class="btn btn-primary">發送</button>
       <a href="view.php">觀看留言</a>
     </div>
   </div>
