@@ -1,14 +1,11 @@
 <?php
-if(!@mysqli_connect("localhost", "root", "",  "weatherDB", 3306)){ // 前三個分別是：IP地址, 使用者, 密碼
-    header("CreatDatabase.php");
-}
 $themsg = $_GET['u_id'];
 $net = "localhost"; // 網址
 $userName = "root"; // 使用者
 $password = ""; // 密碼
-$datebase = ""; //連接資料庫
-$link = mysqli_connect($net, $userName, $password,  $datebase, 3306); 
-if(!$link){
+$datebase = "MsgDB"; //連接資料庫
+$link = mysqli_connect($net, $userName, $password, $datebase, 3306);
+if (!$link) {
     die("連接失敗：" . mysqli_connect_error());
 }
 mysqli_query($link, "set names utf8");
@@ -16,7 +13,7 @@ mysqli_query($link, "set names utf8");
 $sql = "select u_id, u_name, u_msg, u_time
 from `Message`
 where u_id='$themsg';";
-$msg = mysqli_query($link , $sql);
+$msg = mysqli_query($link, $sql);
 
 mysqli_close($link);
 ?>
@@ -25,16 +22,18 @@ mysqli_close($link);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>回覆</title>
 </head>
 <body>
 <div class="container mt-3">
-<?php while($row = mysqli_fetch_assoc($msg)){?>
+<?php while ($row = mysqli_fetch_assoc($msg)) {?>
     <div class="media border p-3">
         <div class="media-body">
-        <h6><?= $row["u_name"]?><small><i>(<?= $row["u_time"]?>)</i></small></h6>
-        <p><?= $row["u_msg"]?></p>
+        <h6><?=$row["u_name"]?><small><i>(<?=$row["u_time"]?>)</i></small></h6>
+        <p><?=$row["u_msg"]?></p>
         </div>
     </div>
 <?php }?>
@@ -51,9 +50,10 @@ mysqli_close($link);
             <div class="col-8">
             <textarea id="message" name="r_msg" cols="40" rows="5" class="form-control"></textarea>
             </div>
-        </div> 
+        </div>
         <div class="form-group row">
             <div class="offset-4 col-8">
+    <input type="hidden" name="u_id" value="<?=$themsg?>" />
             <button name="submit" type="submit" class="btn btn-primary">回覆</button>
             </div>
         </div>

@@ -1,7 +1,9 @@
 <?php
-if (empty($_POST['u_name']) || empty($_POST['u_pass']) || empty($_POST['u_msg'])) {
+if (empty($_POST['u_name']) || empty($_POST['u_msg'])) {
     die('都要填寫');
 }
+$uid = $_GET["u_id"];
+
 date_default_timezone_set("Asia/Taipei");
 
 $net = "localhost"; // 網址
@@ -14,15 +16,29 @@ if (!$link) {
 }
 mysqli_query($link, "set names utf8");
 
+$sql = "select u_id, u_name, u_pass, u_msg, u_time
+from `Message`
+where u_id=$uid ;";
+$msg = mysqli_query($link, $sql);
+$row = mysqli_fetch_assoc($msg);
+
+if ($_POST["u_pass"] != $row["u_pass"]) {
+    die('密碼錯誤');
+}
+
 $uname = $_POST['u_name'];
-$upass = $_POST['u_pass'];
 $umsg = $_POST['u_msg'];
+$uid = $row["u_id"];
 $utime = date("Y-m-d H:i:s", time());
-$sql = "INSERT INTO `Message` (`u_name`, `u_pass`, `u_msg`, `u_time`)
-VALUES('$uname', '$upass' , '$umsg', '$utime');";
+
+$sql = "update Message set
+    u_name = '$uname',
+    u_msg = '$umsg',
+    u_time = '$utime'
+    where u_id = $uid;";
 mysqli_query($link, $sql);
 
 mysqli_close($link);
 
-echo '留言成功2秒後返回';
+echo '修改成功2秒後返回';
 header('refresh:2;url=./view.php');
