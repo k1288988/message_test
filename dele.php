@@ -32,4 +32,4 @@ mysqli_query($link, $sql);
 mysqli_close($link);
 
 echo '刪除成功2秒後返回';
-header('refresh:2;url=./view.php');
+header('refresh:2;url=./index.php');

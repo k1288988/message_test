@@ -37,5 +37,5 @@ mysqli_query($link, $sql);
 
 mysqli_close($link);
 
-header("Location: view.php");
+header("Location: index.php");
 exit();
